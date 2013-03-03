@@ -1,0 +1,33 @@
+{
+  "author": "Douglas A. Seifert <doug@dseifert.net>",
+  "name": "api-client",
+  "description": "Object Oriented library for HTTP Web API clients",
+  "version": "0.0.1",
+  "homepage": "",
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "main": "./lib/api-client.js",
+  "scripts": {
+    "test": "cake test"
+  },
+  "dependencies": {
+    "config": "git+https://github.com/lorenwest/node-config.git",
+    "request": "2.14.x",
+    "underscore": "1.4.x"
+  },
+  "devDependencies": {
+    "testutil": "0.2.x",
+    "coffee-script": "1.5.x",
+    "mocha": "1.3.x",
+    "chai": "1.5.x",
+    "growl": "1.5.x",
+    "fs-extra": "0.1.x",
+    "path-extra": "0.0.x"
+  },
+  "engines": {
+    "node": "*"
+  }
+}

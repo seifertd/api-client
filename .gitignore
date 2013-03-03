@@ -1,7 +1,11 @@
+node_modules/
+config/development.*
+config/runtime.*
 lib-cov
 *.seed
 *.log
 *.csv
+*.swp
 *.dat
 *.out
 *.pid
