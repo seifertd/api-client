@@ -1,14 +1,55 @@
-config      = require 'config'
 util        = require 'util'
 expect      = require('chai').expect
 
 ApiClient   = require '../lib/api_client'
 
 describe 'ApiClient', ->
-  describe 'built from configuration', ->
+  describe 'configured by registration', ->
     beforeEach ->
-      @endpoint_config = config.Endpoints.test_api
-      @endpoint = new ApiClient(@endpoint_config)
+      class Foo extends ApiClient
+      @foo_config =
+        host: 'foo.com'
+        options:
+          base_path: '/foobase'
+      ApiClient.register('foo', Foo, 'Foo', @foo_config)
+
+    it 'has the right host', ->
+      expect(ApiClient.create('foo').host).to.equal(@foo_config.host)
+
+    it 'has the right url', ->
+      expect(ApiClient.create('foo').url()).to.equal("http://foo.com:80/foobase")
+
+  describe 'built from client configuration', ->
+    beforeEach (done) ->
+      @config =
+        Endpoints:
+          foo_api:
+            host: 'foo.com'
+            options:
+              base_path: '/foobase'
+      ApiClient.load @config, (err, config) =>
+        @api_config = config
+        @endpoint = ApiClient.create('foo_api')
+        done(err)
+
+    it "gives back client config", ->
+      expect(@config).to.equal(@api_config)
+
+    it "has the right host", ->
+      expect(@endpoint.host).to.equal(@config.Endpoints.foo_api.host)
+
+    it "has the right port", ->
+      expect(@endpoint.port).to.equal(80)
+
+    it "has the right url", ->
+      expect(@endpoint.url()).to.equal("http://foo.com:80/foobase")
+
+  describe 'built from default configuration', ->
+    beforeEach (done) ->
+      ApiClient.load null, (err, config) =>
+        @endpoint_config = config.Endpoints.test_api
+        @endpoint = new ApiClient(@endpoint_config)
+        done(err)
 
     it "is configured correctly", ->
       expect(@endpoint.host).to.equal(@endpoint_config.host)

@@ -1,5 +1,5 @@
 url               = require 'url'
-config            = require 'config'
+default_config    = require 'config'
 util              = require 'util'
 request           = require 'request'
 fs                = require 'fs'
@@ -7,7 +7,8 @@ fs                = require 'fs'
 
 class ApiClient
   @create: (name) ->
-    endpoint_config = config.Endpoints[name]
+    throw "ApiClient not configured" unless @config?
+    endpoint_config = @config.Endpoints[name]
     clazz = ApiClient
     clazz = @types[endpoint_config.type] if endpoint_config.type
     new clazz(endpoint_config)
@@ -15,13 +16,21 @@ class ApiClient
   @types =
     'ApiClient': ApiClient
 
-  @load: (cb, dirname = __dirname) ->
-    fs.readdir dirname, (err, files) ->
+  @load: (config, cb, dirname = __dirname) ->
+    @config = config || default_config
+    fs.readdir dirname, (err, files) =>
       cb(err, null) if err && cb
       each files, (file) ->
         full_path = "#{dirname}/#{file}"
         require full_path
-      cb(null, files) if cb
+      cb(null, @config) if cb
+
+  @register: (label, clazz, clazz_name, endpoint_config) ->
+    @types ||= {}
+    @types[clazz_name] = clazz
+    @config ||= {}
+    @config.Endpoints ||= {}
+    @config.Endpoints[label] = endpoint_config
 
 
   constructor: (options) ->
