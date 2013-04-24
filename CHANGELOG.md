@@ -1,4 +1,5 @@
 0.0.3 / 2013-04-23
+------------------
 * Allow client supplied configuration
 * Allow registration of client ApiClient subclasses
 
