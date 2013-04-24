@@ -1,5 +1,9 @@
 {
-  "author": "Douglas A. Seifert <doug@dseifert.net>",
+  "author": {
+    "name": "Douglas A. Seifert",
+    "email": "doug@dseifert.net",
+    "url": "http://www.dseifert.net"
+  }
   "name": "api-client",
   "description": "Object Oriented library for HTTP Web API clients",
   "version": "0.0.3",
