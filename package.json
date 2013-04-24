@@ -2,7 +2,7 @@
   "author": "Douglas A. Seifert <doug@dseifert.net>",
   "name": "api-client",
   "description": "Object Oriented library for HTTP Web API clients",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "",
   "keywords": [],
   "repository": {

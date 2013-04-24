@@ -51,17 +51,59 @@ requests to the web service api.  The configuration may specify a
 'type' attribute, whose value is the name of a registered or 
 pre-configured api client object.
 
+### Using the default configuration
+
 ```coffeescript
 ApiClient = require 'api_client'
 
-ApiClient.load (errs, files) ->
+ApiClient.load null, (err, config) ->
   console.log "Loaded API Client"
 
   # Create an instance of TwitterClient.
-  var twitter = ApiClient.create 'twitter'
+  twitter = ApiClient.create 'twitter'
   
   twitter.user_info(1, 'TwitterAPI', {include_entities: true}, (err, response, body) ->
     console.log "Got Twitter JSON data: " + body
+```
+
+### Client supplied configuration
+
+```coffeescript
+ApiClient = require 'api_client'
+my_config =
+  Endpoints:
+    foo_client:
+      host: 'foo.com'
+
+ApiClient.load my_config, (err, config) ->
+  console.log "Loaded API Client"
+
+  foo_client = ApiClient.create('foo_client')
+
+  foo_client.get({...})
+```
+
+### Registering client created ApiClient subclasses
+
+```coffeescript
+ApiClient = require 'api_client'
+
+class FooClient extends ApiClient
+  test: ->
+    console.log "Foo request: " + @url()
+
+ApiClient.register('foo', FooClient, 'FooClient', {
+  host: 'foo.com',
+  type: 'FooClient',
+  options:
+    base_path: '/fooapi'
+})
+
+console.log "Registered FooClient, config = " + util.inspect(ApiClient.config)
+
+fc = ApiClient.create('foo')
+
+fc.test()
 ```
 
 License
