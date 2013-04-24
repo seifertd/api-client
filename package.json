@@ -4,10 +4,10 @@
   "description": "Object Oriented library for HTTP Web API clients",
   "version": "0.0.2",
   "homepage": "",
-  "keywords": [],
+  "keywords": ['request', 'rest', 'web service', 'api', 'client'],
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/seifertd/api-client"
   },
   "main": "./lib/api-client.js",
   "scripts": {
