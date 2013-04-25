@@ -19,7 +19,6 @@
     "type": "git",
     "url": "https://github.com/seifertd/api-client"
   },
-  "main": "lib/api_client.js",
   "scripts": {
     "test": "cake test"
   },
