@@ -1,3 +1,9 @@
+0.0.4 / 2013-04-25
+------------------
+* Fix package.json
+* Change config attribute to lowercase
+* Remove dead code
+
 0.0.3 / 2013-04-23
 ------------------
 * Allow client supplied configuration

@@ -30,11 +30,11 @@ endpoints.  Endpoint configuration can be achieved in one of three ways:
       objects and corresponding configuration by calling a function
 
 In the first two cases, the api-client library expects the config object
-to have a single attribute, 'Endpoints', pointing at a object.  The object
+to have a single attribute, 'endpoints', pointing at a object.  The object
 in turn contains any number endpoint configuration objects as attributes:
 
 ```coffeescript
-Endpoints:
+endpoints:
   twitter:
     type: 'TwitterClient'
     host: 'api.twitter.com'
@@ -71,7 +71,7 @@ ApiClient.load null, (err, config) ->
 ```coffeescript
 ApiClient = require 'api_client'
 my_config =
-  Endpoints:
+  endpoints:
     foo_client:
       host: 'foo.com'
 

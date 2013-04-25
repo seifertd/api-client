@@ -1,5 +1,5 @@
 module.exports =
-  Endpoints:
+  endpoints:
     test_api:
       host: "test.com"
       port: 80

@@ -3,7 +3,7 @@
     "name": "Douglas A. Seifert",
     "email": "doug@dseifert.net",
     "url": "http://www.dseifert.net"
-  }
+  },
   "name": "api-client",
   "description": "Object Oriented library for HTTP Web API clients",
   "version": "0.0.3",
@@ -19,7 +19,7 @@
     "type": "git",
     "url": "https://github.com/seifertd/api-client"
   },
-  "main": "./lib/api-client.js",
+  "main": "lib/api_client.js",
   "scripts": {
     "test": "cake test"
   },

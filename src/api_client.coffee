@@ -1,23 +1,33 @@
+fs                = require 'fs'
+
+# Make sure $CWD/config exists
+config_dir = process.cwd() + "/config"
+if !fs.existsSync(config_dir)
+  fs.mkdirSync(config_dir)
+else if !fs.statSync(config_dir).isDirectory()
+  raise "#{config_dir} must be a directory, not a regular file"
+
 url               = require 'url'
 default_config    = require 'config'
 util              = require 'util'
 request           = require 'request'
-fs                = require 'fs'
 {extend, each}    = require 'underscore'
 
 class ApiClient
   @create: (name) ->
     throw "ApiClient not configured" unless @config?
-    endpoint_config = @config.Endpoints[name]
+    endpoint_config = @config.endpoints[name]
     clazz = ApiClient
     clazz = @types[endpoint_config.type] if endpoint_config.type
     new clazz(endpoint_config)
+
+  @default_config = default_config
 
   @types =
     'ApiClient': ApiClient
 
   @load: (config, cb, dirname = __dirname) ->
-    @config = config || default_config
+    @config = config || @default_config
     fs.readdir dirname, (err, files) =>
       cb(err, null) if err && cb
       each files, (file) ->
@@ -29,8 +39,8 @@ class ApiClient
     @types ||= {}
     @types[clazz_name] = clazz
     @config ||= {}
-    @config.Endpoints ||= {}
-    @config.Endpoints[label] = endpoint_config
+    @config.endpoints ||= {}
+    @config.endpoints[label] = endpoint_config
 
 
   constructor: (options) ->

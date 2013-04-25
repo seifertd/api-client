@@ -22,7 +22,7 @@ describe 'ApiClient', ->
   describe 'built from client configuration', ->
     beforeEach (done) ->
       @config =
-        Endpoints:
+        endpoints:
           foo_api:
             host: 'foo.com'
             options:
@@ -36,7 +36,7 @@ describe 'ApiClient', ->
       expect(@config).to.equal(@api_config)
 
     it "has the right host", ->
-      expect(@endpoint.host).to.equal(@config.Endpoints.foo_api.host)
+      expect(@endpoint.host).to.equal(@config.endpoints.foo_api.host)
 
     it "has the right port", ->
       expect(@endpoint.port).to.equal(80)
@@ -47,7 +47,7 @@ describe 'ApiClient', ->
   describe 'built from default configuration', ->
     beforeEach (done) ->
       ApiClient.load null, (err, config) =>
-        @endpoint_config = config.Endpoints.test_api
+        @endpoint_config = config.endpoints.test_api
         @endpoint = new ApiClient(@endpoint_config)
         done(err)
 
