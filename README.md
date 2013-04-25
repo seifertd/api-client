@@ -54,7 +54,7 @@ pre-configured api client object.
 ### Using the default configuration
 
 ```coffeescript
-ApiClient = require 'api_client'
+{ApiClient} = require 'api-client'
 
 ApiClient.load null, (err, config) ->
   console.log "Loaded API Client"
@@ -69,7 +69,7 @@ ApiClient.load null, (err, config) ->
 ### Client supplied configuration
 
 ```coffeescript
-ApiClient = require 'api_client'
+{ApiClient} = require 'api-client'
 my_config =
   endpoints:
     foo_client:
@@ -86,7 +86,7 @@ ApiClient.load my_config, (err, config) ->
 ### Registering client created ApiClient subclasses
 
 ```coffeescript
-ApiClient = require 'api_client'
+{ApiClient} = require 'api-client'
 
 class FooClient extends ApiClient
   test: ->
@@ -104,6 +104,25 @@ console.log "Registered FooClient, config = " + util.inspect(ApiClient.config)
 fc = ApiClient.create('foo')
 
 fc.test()
+```
+
+Versioned Api Client
+--------------------
+
+The library also exports a subclass of ApiClient called VersionedApiClient
+that allows automatic handling of an API version in the request path.
+This is of limited use, because the base_path configuration option can
+just as well handle it.  To use it, provide endpoint config like the
+following:
+
+```coffeescript
+endpoints:
+  versioned:
+    type: 'VersionedApiClient'
+    host: 'somehost.com'
+    options:
+      base_path: '/api'
+      version: 'v2'
 ```
 
 License

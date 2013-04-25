@@ -1,3 +1,7 @@
+0.0.5 / 2013-04-25
+------------------
+* Add index.js to export both classes.
+
 0.0.4 / 2013-04-25
 ------------------
 * Fix package.json
