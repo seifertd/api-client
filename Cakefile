@@ -23,15 +23,26 @@ task 'patch_release', 'Create a patch release and publish to npmjs.org', ->
         console.log "Error creating patch release. Code: #{code}"
         cb(code, null)
   (code, cb) ->
+    git = spawn('git', ['push'])
+    git.stderr.on 'data', (data) -> process.stderr.write data.toString()
+    git.stdout.on 'data', (data) -> process.stdout.write data.toString()
+    git.on 'exit', (code) ->
+      if code is 0
+        console.log 'Pushed code'
+        cb(null, code)
+      else
+        console.log "Error pushing code. Code: #{code}"
+        cb(code, null)
+  (code, cb) ->
     git = spawn('git', ['push', '--tags'])
     git.stderr.on 'data', (data) -> process.stderr.write data.toString()
     git.stdout.on 'data', (data) -> process.stdout.write data.toString()
     git.on 'exit', (code) ->
       if code is 0
-        console.log 'Pushed code and tags'
+        console.log 'Pushed tags'
         cb(null, code)
       else
-        console.log "Error pushing code and tags. Code: #{code}"
+        console.log "Error pushing tags. Code: #{code}"
         cb(code, null)
   ], (err, results) ->
     console.log "Done."
