@@ -6,7 +6,7 @@
   },
   "name": "api-client",
   "description": "Object Oriented library for HTTP Web API clients",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "homepage": "",
   "keywords": [
     "request",
