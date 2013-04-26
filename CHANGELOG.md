@@ -1,3 +1,7 @@
+0.0.7 / 2013-04-26
+------------------
+* Add patch_release task to Cakefile
+
 0.0.6 / 2013-04-26
 ------------------
 * Fix api_path() for VersionedApiClient to not have double slashes
