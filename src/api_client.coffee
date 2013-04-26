@@ -15,13 +15,16 @@ request           = require 'request'
 
 class ApiClient
   @create: (name) ->
-    throw "ApiClient not configured" unless @config?
+    throw new Error("ApiClient not configured") unless @config?
     endpoint_config = @config.endpoints[name]
     clazz = ApiClient
     clazz = @types[endpoint_config.type] if endpoint_config.type
     new clazz(endpoint_config)
 
   @default_config = default_config
+
+  @default_request_options =
+    timeout: 2000
 
   @types =
     'ApiClient': ApiClient
@@ -51,7 +54,7 @@ class ApiClient
       @port ||= 443
     else
       @port ||= 80
-    @request_options = options.request_options
+    @request_options = extend @default_request_options, options.request_options
 
   api_path: ->
     @options.base_path || "/"

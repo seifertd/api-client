@@ -1,3 +1,8 @@
+0.0.6 / 2013-04-26
+------------------
+* Fix api_path() for VersionedApiClient to not have double slashes
+* Add default request options and timeouts
+
 0.0.5 / 2013-04-25
 ------------------
 * Add index.js to export both classes.

@@ -51,6 +51,34 @@ requests to the web service api.  The configuration may specify a
 'type' attribute, whose value is the name of a registered or 
 pre-configured api client object.
 
+Configuration
+-------------
+
+Each endpoint configuration object has the following layout:
+
+```coffeescript
+host: 'some.host.com'       # The only required attribute
+port: '232'                 # Defaults to 80 or 443, depending on the
+                            #   options.protocol attribute
+type: 'StringClassName'     # Defaults to 'ApiClient'
+options:
+  protocol: 'http|https'    # Either 'http' or 'https', defaults to 'http'
+  base_path: '/apibase'     # The base of all url paths for the service, defaults to ''
+  username: 'user'          # Defaults to null, use to configure HTTP basic auth
+  password: 'pass'          # Defaults to null, use to configure HTTP basic auth
+  version: 'API_VERSION'    # Defaults to null, appended to base_path to form url, only
+                            #   used if VersionedApiClient (or subclass thereof) is the type
+  request_options:
+    timeout:                # Defaults to 2000, request fails if it takes longer than this
+```
+
+The options.request_options object can be used to specify any option
+allowed by the node.js request library.  See https://github.com/mikeal/request.
+
+The url formed by the api-client will therefore be:
+
+"#{options.protocol}://#{host}:#{port}#{base_path}[/#{version}]"
+
 ### Using the default configuration
 
 ```coffeescript

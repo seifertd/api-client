@@ -83,3 +83,18 @@ describe 'ApiClient', ->
 
     it "has the default api path", ->
       expect(@endpoint.api_path()).to.equal("/")
+
+  ###
+  # WTF? describe.skip does not work????
+  describe.skip 'to a non existent host', ->
+    beforeEach ->
+      @endpoint_config =
+        host: '127.0.0.5'
+        port: 80
+      @endpoint = new ApiClient(@endpoint_config)
+
+    it "times out with an error", (done) ->
+      @endpoint.get {}, {}, (error, response, body) ->
+        expect(error).to.not.be(null)
+        done()
+  ###
