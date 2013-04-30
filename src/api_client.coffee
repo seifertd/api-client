@@ -80,9 +80,10 @@ class ApiClient
     request_opts.callback = cb if cb
 
     if @options.username && @options.password
-      request.auth(@options.username, @options.password).request(request_opts)
-    else
-      #console.log "Making request: " + util.inspect(request_opts)
-      request request_opts
+      extend request_opts, {user: @options.username, pass: @options.password}
+    
+    @request(request_opts)
+
+  request: request
 
 module.exports = ApiClient

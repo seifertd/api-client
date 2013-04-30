@@ -35,7 +35,8 @@
     "async": "> 0",
     "growl": "1.5.x",
     "fs-extra": "0.1.x",
-    "path-extra": "0.0.x"
+    "path-extra": "0.0.x",
+    "bondjs": "0.x"
   },
   "engines": {
     "node": "*"

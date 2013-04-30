@@ -1,3 +1,8 @@
+0.0.8 / 2013-04-30
+------------------
+* Add real url test using bondjs to mock the request.
+* Fix basic auth code, request docs are plain wrong.
+
 0.0.7 / 2013-04-26
 ------------------
 * Add patch_release task to Cakefile

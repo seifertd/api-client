@@ -1,5 +1,6 @@
 util        = require 'util'
 expect      = require('chai').expect
+bond        = require 'bondjs'
 
 ApiClient   = require '../lib/api_client'
 
@@ -42,6 +43,7 @@ describe 'ApiClient', ->
       expect(@endpoint.port).to.equal(80)
 
     it "has the right url", ->
+
       expect(@endpoint.url()).to.equal("http://foo.com:80/foobase")
 
   describe 'built from default configuration', ->
@@ -83,6 +85,13 @@ describe 'ApiClient', ->
 
     it "has the default api path", ->
       expect(@endpoint.api_path()).to.equal("/")
+
+    it "builds the url correctly", (done) ->
+      bond(@endpoint, 'request').to (args) ->
+        expect(args.uri).to.equal('http://test.com:80/?foo=bar')
+        expect(args.headers.header1).to.equal('HEADER1')
+        done()
+      @endpoint.get({foo: 'bar'}, {header1: 'HEADER1'})
 
   ###
   # WTF? describe.skip does not work????
