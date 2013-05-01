@@ -20,6 +20,34 @@ describe 'ApiClient', ->
     it 'has the right url', ->
       expect(ApiClient.create('foo').url()).to.equal("http://foo.com:80/foobase")
 
+  describe 'with request_options', ->
+    beforeEach ->
+      class Foo extends ApiClient
+        test: (params, headers, cb) ->
+          @get(params, headers, cb)
+      @foo_config =
+        host: 'foo.com'
+        options:
+          base_path: '/foobase'
+        request_options:
+          proxy: 'http://localhost:8888'
+      ApiClient.register('foo', Foo, 'Foo', @foo_config)
+      @endpoint = ApiClient.create('foo')
+
+    it 'has the right host', ->
+      expect(@endpoint.host).to.equal(@foo_config.host)
+
+    it 'has the right url', ->
+      expect(@endpoint.url()).to.equal("http://foo.com:80/foobase")
+
+    it 'can be called', (done) ->
+      bond(@endpoint, 'request').to (args) ->
+        expect(args.uri).to.equal('http://foo.com:80/foobase?foo=bar')
+        expect(args.headers.header1).to.equal('HEADER1')
+        expect(args.proxy).to.equal("http://localhost:8888")
+        done()
+      @endpoint.get({foo: 'bar'}, {header1: 'HEADER1'})
+
   describe 'built from client configuration', ->
     beforeEach ->
       @config =

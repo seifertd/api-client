@@ -1,3 +1,6 @@
+1.0.1 / 2013-05-01
+* Fix bug with request_options handling.
+
 1.0.0 / 2013-05-01
 * Change ApiClient.load to be synchronous
 
