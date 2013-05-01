@@ -84,14 +84,14 @@ The url formed by the api-client will therefore be:
 ```coffeescript
 {ApiClient} = require 'api-client'
 
-ApiClient.load null, (err, config) ->
-  console.log "Loaded API Client"
+ApiClient.load null
+console.log "Loaded API Client"
 
-  # Create an instance of TwitterClient.
-  twitter = ApiClient.create 'twitter'
+# Create an instance of TwitterClient.
+twitter = ApiClient.create 'twitter'
   
-  twitter.user_info(1, 'TwitterAPI', {include_entities: true}, (err, response, body) ->
-    console.log "Got Twitter JSON data: " + body
+twitter.user_info(1, 'TwitterAPI', {include_entities: true}, (err, response, body) ->
+  console.log "Got Twitter JSON data: " + body
 ```
 
 ### Client supplied configuration
@@ -103,12 +103,12 @@ my_config =
     foo_client:
       host: 'foo.com'
 
-ApiClient.load my_config, (err, config) ->
-  console.log "Loaded API Client"
+ApiClient.load my_config
+console.log "Loaded API Client"
 
-  foo_client = ApiClient.create('foo_client')
+foo_client = ApiClient.create('foo_client')
 
-  foo_client.get({...})
+foo_client.get({...})
 ```
 
 ### Registering client created ApiClient subclasses

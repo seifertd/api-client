@@ -29,14 +29,12 @@ class ApiClient
   @types =
     'ApiClient': ApiClient
 
-  @load: (config, cb, dirname = __dirname) ->
+  @load: (config, dirname = __dirname) ->
     @config = config || @default_config
-    fs.readdir dirname, (err, files) =>
-      cb(err, null) if err && cb
-      each files, (file) ->
-        full_path = "#{dirname}/#{file}"
-        require full_path
-      cb(null, @config) if cb
+    files = fs.readdir dirname
+    each files, (file) ->
+      full_path = "#{dirname}/#{file}"
+      require full_path
 
   @register: (label, clazz, clazz_name, endpoint_config) ->
     @types ||= {}

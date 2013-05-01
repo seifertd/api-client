@@ -1,3 +1,6 @@
+1.0.0 / 2013-05-01
+* Change ApiClient.load to be synchronous
+
 0.0.8 / 2013-04-30
 ------------------
 * Add real url test using bondjs to mock the request.

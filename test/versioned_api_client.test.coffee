@@ -7,11 +7,10 @@ VersionedApiClient = require '../lib/versioned_api_client'
 
 describe 'VersionedApiClient', ->
   describe 'with default config', ->
-    beforeEach (done) ->
+    beforeEach ->
       @endpoint = null
-      ApiClient.load null, (err, files) =>
-        @endpoint = ApiClient.create('subclass_api')
-        done(err)
+      ApiClient.load null
+      @endpoint = ApiClient.create('subclass_api')
 
     it 'has the right path', ->
       expect(@endpoint.api_path()).to.equal("/apibase/v1")

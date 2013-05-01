@@ -21,20 +21,15 @@ describe 'ApiClient', ->
       expect(ApiClient.create('foo').url()).to.equal("http://foo.com:80/foobase")
 
   describe 'built from client configuration', ->
-    beforeEach (done) ->
+    beforeEach ->
       @config =
         endpoints:
           foo_api:
             host: 'foo.com'
             options:
               base_path: '/foobase'
-      ApiClient.load @config, (err, config) =>
-        @api_config = config
-        @endpoint = ApiClient.create('foo_api')
-        done(err)
-
-    it "gives back client config", ->
-      expect(@config).to.equal(@api_config)
+      ApiClient.load @config
+      @endpoint = ApiClient.create('foo_api')
 
     it "has the right host", ->
       expect(@endpoint.host).to.equal(@config.endpoints.foo_api.host)
@@ -47,11 +42,10 @@ describe 'ApiClient', ->
       expect(@endpoint.url()).to.equal("http://foo.com:80/foobase")
 
   describe 'built from default configuration', ->
-    beforeEach (done) ->
-      ApiClient.load null, (err, config) =>
-        @endpoint_config = config.endpoints.test_api
-        @endpoint = new ApiClient(@endpoint_config)
-        done(err)
+    beforeEach ->
+      ApiClient.load null
+      @endpoint_config = ApiClient.config.endpoints.test_api
+      @endpoint = new ApiClient(@endpoint_config)
 
     it "is configured correctly", ->
       expect(@endpoint.host).to.equal(@endpoint_config.host)
