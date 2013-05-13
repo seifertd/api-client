@@ -1,4 +1,4 @@
-1.0.2 / 2013-05-13
+1.0.3 / 2013-05-13
 ------------------
 * BUGFIX: Don't overwrite ApiClient.default_request_options
 
