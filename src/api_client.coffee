@@ -52,7 +52,10 @@ class ApiClient
       @port ||= 443
     else
       @port ||= 80
-    @request_options = extend ApiClient.default_request_options, options.request_options
+
+    # Merge default request opts and provided request opts,
+    # but make sure we do it in a new object
+    @request_options = extend {}, ApiClient.default_request_options, options.request_options
 
   api_path: ->
     @options.base_path || "/"

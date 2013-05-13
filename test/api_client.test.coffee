@@ -48,6 +48,12 @@ describe 'ApiClient', ->
         done()
       @endpoint.get({foo: 'bar'}, {header1: 'HEADER1'})
 
+    it "has the right request options", ->
+      expect(@endpoint.request_options).to.deep.equal({timeout: 2000, proxy: 'http://localhost:8888'})
+
+    it "doesn't blow away the default request options", ->
+      expect(ApiClient.default_request_options).to.deep.equal({timeout: 2000})
+
   describe 'built from client configuration', ->
     beforeEach ->
       @config =
