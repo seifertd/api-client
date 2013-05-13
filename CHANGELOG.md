@@ -1,10 +1,13 @@
 1.0.2 / 2013-05-13
-* BUGFIX: Don''t overwrite ApiClient.default_request_options
+------------------
+* BUGFIX: Don't overwrite ApiClient.default_request_options
 
 1.0.1 / 2013-05-01
+------------------
 * Fix bug with request_options handling.
 
 1.0.0 / 2013-05-01
+------------------
 * Change ApiClient.load to be synchronous
 
 0.0.8 / 2013-04-30
