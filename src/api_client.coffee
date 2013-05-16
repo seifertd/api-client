@@ -27,6 +27,8 @@ class ApiClient
   @default_request_options =
     timeout: 2000
 
+  @logger = null
+
   @types =
     'ApiClient': ApiClient
 
@@ -87,6 +89,8 @@ class ApiClient
 
     if @options.username && @options.password
       extend request_opts, {user: @options.username, pass: @options.password}
+
+    ApiClient.logger.info "[APICLIENT] making request: #{util.inspect request_opts}" if ApiClient.logger
     
     @request(request_opts)
 
