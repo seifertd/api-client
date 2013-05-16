@@ -62,6 +62,7 @@ describe 'ApiClient', ->
             host: 'foo.com'
             options:
               base_path: '/foobase'
+      ApiClient.config = null
       ApiClient.load @config
       @endpoint = ApiClient.create('foo_api')
 
@@ -72,11 +73,15 @@ describe 'ApiClient', ->
       expect(@endpoint.port).to.equal(80)
 
     it "has the right url", ->
-
       expect(@endpoint.url()).to.equal("http://foo.com:80/foobase")
+
+    it "doesn't overwrite config if loaded more than once", ->
+      ApiClient.load {endpoints: {}}
+      expect((k for own k of ApiClient.config.endpoints).length).to.equal(1)
 
   describe 'built from default configuration', ->
     beforeEach ->
+      ApiClient.config = null
       ApiClient.load null
       @endpoint_config = ApiClient.config.endpoints.test_api
       @endpoint = new ApiClient(@endpoint_config)

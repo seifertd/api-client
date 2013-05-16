@@ -17,6 +17,7 @@ class ApiClient
   @create: (name) ->
     throw new Error("ApiClient not configured") unless @config?
     endpoint_config = @config.endpoints[name]
+    throw new Error("ApiClient endpoint #{name} not configured") unless endpoint_config?
     clazz = ApiClient
     clazz = @types[endpoint_config.type] if endpoint_config.type
     new clazz(endpoint_config)
@@ -30,7 +31,11 @@ class ApiClient
     'ApiClient': ApiClient
 
   @load: (config, dirname = __dirname) ->
+    # Don't load twice
+    return if @config
+
     @config = config || @default_config
+
     files = fs.readdir dirname
     each files, (file) ->
       full_path = "#{dirname}/#{file}"
