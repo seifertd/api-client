@@ -1,4 +1,9 @@
+1.0.5 / 2013-05-16
+------------------
+* Add support for logging
+
 1.0.4 / 2013-05-16
+------------------
 * BUGFIX: Don't allow loading more than once.
 
 1.0.3 / 2013-05-13
