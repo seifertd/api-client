@@ -38,7 +38,7 @@ class ApiClient
 
     @config = config || @default_config
 
-    files = fs.readdir dirname
+    files = fs.readdirSync dirname
     each files, (file) ->
       full_path = "#{dirname}/#{file}"
       require full_path
@@ -85,12 +85,18 @@ class ApiClient
 
     extend(request_opts, @request_options) if @request_options?
 
-    request_opts.callback = cb if cb
+    start = new Date
+    if cb
+      request_opts.callback = (err, body, headers) ->
+        stop = new Date
+        delta = stop.getTime() - start.getTime()
+        ApiClient.logger.info "[APICLIENT] request stop: #{request_opts.uri}, delta: #{delta}" if ApiClient.logger
+        cb(err, body, headers)
 
     if @options.username && @options.password
       extend request_opts, {user: @options.username, pass: @options.password}
 
-    ApiClient.logger.info "[APICLIENT] making request: #{util.inspect request_opts}" if ApiClient.logger
+    ApiClient.logger.info "[APICLIENT] request start: #{request_opts.uri}" if ApiClient.logger
     
     @request(request_opts)
 
