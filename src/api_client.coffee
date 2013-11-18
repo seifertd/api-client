@@ -87,11 +87,11 @@ class ApiClient
 
     start = new Date
     if cb
-      request_opts.callback = (err, body, headers) ->
+      request_opts.callback = (err, response, body) ->
         stop = new Date
         delta = stop.getTime() - start.getTime()
-        ApiClient.logger.info "[APICLIENT] request stop: #{request_opts.uri}, delta: #{delta}" if ApiClient.logger
-        cb(err, body, headers)
+        ApiClient.logger.info "[APICLIENT] request stop: #{response.statusCode}: #{request_opts.uri}, delta: #{delta}" if ApiClient.logger
+        cb(err, response, body)
 
     if @options.username && @options.password
       extend request_opts, {user: @options.username, pass: @options.password}

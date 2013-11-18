@@ -1,3 +1,7 @@
+1.0.7 / 2013-05-16
+------------------
+* If logger is set, log request start and stop if callback is provided
+
 1.0.6 / 2013-05-16
 ------------------
 * Add support for logging
