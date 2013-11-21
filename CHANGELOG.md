@@ -1,4 +1,4 @@
-1.0.9 / 2013-11-21
+1.0.10 / 2013-11-21
 ------------------
 * Add ability to stub requests for use in testing
 
