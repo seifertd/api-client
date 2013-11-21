@@ -79,6 +79,31 @@ describe 'ApiClient', ->
       ApiClient.load {endpoints: {}}
       expect((k for own k of ApiClient.config.endpoints).length).to.equal(1)
 
+  describe 'built from configuration with stubs', ->
+    beforeEach ->
+      @config =
+        endpoints:
+          foo_api:
+            host: 'foo.com'
+            options:
+              base_path: '/foobase'
+            stubs: [
+             [/.*/, null, null, 'body']
+             [/.*/, null, null, {file: './test/stub_file.txt'}]
+            ]
+      ApiClient.config = null
+      ApiClient.load @config
+      @endpoint = ApiClient.create('foo_api')
+
+    it "has the stubs", ->
+      expect(@endpoint.stubs().length).to.equal 2
+
+    it "can read bodies literally", ->
+      expect(@endpoint.stubs()[0][3]).to.equal "body"
+
+    it "can read bodies from files", ->
+      expect(@endpoint.stubs()[1][3]).to.equal "body from file\n"
+
   describe 'built from default configuration', ->
     beforeEach ->
       ApiClient.config = null
