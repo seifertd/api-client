@@ -11,7 +11,8 @@ url               = require 'url'
 default_config    = require 'config'
 util              = require 'util'
 request           = require 'request'
-{extend, each}    = require 'underscore'
+{extend, each, find} = require 'underscore'
+{EventEmitter} = require 'events'
 
 class ApiClient
   @create: (name) ->
@@ -77,6 +78,12 @@ class ApiClient
   url: (params = {}) ->
     url.format @url_config(params)
 
+  stub_request: (uriRegex, err, response, body) ->
+    @stubs().push [uriRegex, err, response, body]
+
+  stubs: ->
+    @stubArray ||= []
+
   get: (params, headers, cb = undefined) ->
     request_opts =
       uri: @url(params)
@@ -84,6 +91,22 @@ class ApiClient
       method: 'GET'
 
     extend(request_opts, @request_options) if @request_options?
+
+    # Handle stubs
+    stub = find @stubs(), (stub) -> stub[0].test(request_opts.uri)
+    if stub
+      if cb
+        process.nextTick ->
+          cb(stub[1], stub[2], stub[3])
+        return null
+      else
+        e = new EventEmitter
+        process.nextTick ->
+          if stub[1]?
+            e.emit('error', stub[1])
+          else
+            e.emit('complete', stub[2], stub[3])
+        return e
 
     start = new Date
     if cb

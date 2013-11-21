@@ -109,6 +109,37 @@ describe 'ApiClient', ->
       expect(@endpoint.port).to.equal(test_endpoint.port)
       expect(@endpoint.options).to.equal(test_endpoint.options)
 
+    describe "with stubs", ->
+      describe "and a callback", ->
+        it "can stub errors", (done) ->
+          test_endpoint = ApiClient.create('test_api')
+          test_endpoint.stub_request(/.*/, {error: true}, null, null)
+          test_endpoint.get {}, null, (err, response, body) ->
+            expect(err).to.not.be_null
+            done()
+        it "can stub successes", (done) ->
+          test_endpoint = ApiClient.create('test_api')
+          test_endpoint.stub_request(/.*/, null, null, 'body')
+          test_endpoint.get {}, null, (err, response, body) ->
+            expect(err).to.be_null
+            expect(body).to.equal 'body'
+            done()
+      describe "and no callback", ->
+        it "can stub errors", (done) ->
+          test_endpoint = ApiClient.create('test_api')
+          test_endpoint.stub_request(/.*/, {error: true}, null, null)
+          request = test_endpoint.get {}, null
+          request.on 'error', (err) ->
+            expect(err).to.not.be_null
+            done()
+        it "can stub successes", (done) ->
+          test_endpoint = ApiClient.create('test_api')
+          test_endpoint.stub_request(/.*/, null, null, 'body')
+          request = test_endpoint.get {}, null
+          request.on 'complete', (response, body) ->
+            expect(body).to.equal 'body'
+            done()
+
   describe 'with no base path option', ->
     beforeEach ->
       @endpoint_config =
