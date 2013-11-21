@@ -152,6 +152,49 @@ endpoints:
       version: 'v2'
 ```
 
+Stubbing and Testing
+--------------------
+
+The api-client library is written to support testing against it by stubbing
+requests by url regex.  Stubs can be set using the configuration mechanism
+or set explicitly on an instance of the ApiClient class.
+
+Via configuration:
+
+```coffeescript
+endpoints:
+  myclient:
+    type: 'ApiClient'
+    host: 'somehost.com'
+    options:
+      base_path: '/foo'
+    stubs: [
+      [ /.*/, null, null, 'stub body' ]
+    ] 
+```
+
+or programatically:
+
+```coffeescript
+myClient = ApiClient.create 'myclient'
+myClient.stub_request [ /.*/, null, null, 'stub body' ]
+```
+
+The stub definition consists of an array of four objects:
+
+  1. A regex that will test the url.  If the test is true, this stub will be used
+  1. An error object to return if the stub is used
+  1. A response object to return if the stub is used
+  1. A body object to return if the stub is used.
+
+In either of the above cases, any @get call against the client would result
+in 'stub body' being returned as the body because the regex would match any
+url.
+
+The stub body can be either a static string, or an object with a 'file' attribute.
+In the latter case, the file attribute is the path name of a file whose contents
+are used as the stub body.
+
 License
 -------
 

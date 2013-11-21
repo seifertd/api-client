@@ -1,3 +1,11 @@
+1.0.9 / 2013-11-21
+------------------
+* Add ability to stub requests for use in testing
+
+1.0.8 / 2013-11-20
+------------------
+* Add timing details to request logging
+
 1.0.7 / 2013-05-16
 ------------------
 * If logger is set, log request start and stop if callback is provided
