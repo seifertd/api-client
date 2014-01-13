@@ -1,3 +1,7 @@
+1.0.11 / 2014-01-13
+------------------
+* Update dependencies
+
 1.0.10 / 2013-11-21
 ------------------
 * Add ability to stub requests for use in testing

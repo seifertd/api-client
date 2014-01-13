@@ -6,7 +6,7 @@
   },
   "name": "api-client",
   "description": "Object Oriented library for HTTP Web API clients",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "homepage": "",
   "keywords": [
     "request",
@@ -24,8 +24,8 @@
   },
   "dependencies": {
     "config": "git+https://github.com/lorenwest/node-config.git",
-    "request": "2.14.x",
-    "underscore": "1.4.x"
+    "request": "2.x",
+    "underscore": "1.x"
   },
   "devDependencies": {
     "testutil": "> 0",
