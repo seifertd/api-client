@@ -1,3 +1,7 @@
+1.0.13 / 2014-01-13
+------------------
+* Add ability to stub using a string pattern as well as a regex object
+
 1.0.11 / 2014-01-13
 ------------------
 * Update dependencies

@@ -99,7 +99,12 @@ class ApiClient
     extend(request_opts, @request_options) if @request_options?
 
     # Handle stubs
-    stub = find @stubs(), (stub) -> stub[0].test(request_opts.uri)
+    stub = find @stubs(), (stub) ->
+      pattern = stub[0]
+      unless pattern instanceof RegExp
+        pattern = new RegExp pattern
+      pattern.test(request_opts.uri)
+
     if stub
       if cb
         process.nextTick ->

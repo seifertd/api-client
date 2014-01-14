@@ -88,21 +88,49 @@ describe 'ApiClient', ->
             options:
               base_path: '/foobase'
             stubs: [
-             [/.*/, null, null, 'body']
-             [/.*/, null, null, {file: './test/stub_file.txt'}]
+             [/\/canned_regex/, null, null, 'body']
+             ["/canned_string", null, null, 'foobar']
+             [/\/file_regex/, null, null, {file: './test/stub_file.txt'}]
             ]
       ApiClient.config = null
       ApiClient.load @config
       @endpoint = ApiClient.create('foo_api')
 
     it "has the stubs", ->
-      expect(@endpoint.stubs().length).to.equal 2
+      expect(@endpoint.stubs().length).to.equal 3
 
     it "can read bodies literally", ->
       expect(@endpoint.stubs()[0][3]).to.equal "body"
 
     it "can read bodies from files", ->
-      expect(@endpoint.stubs()[1][3]).to.equal "body from file\n"
+      expect(@endpoint.stubs()[2][3]).to.equal "body from file\n"
+
+    it "can stub requests using canned data and a regex", (done) ->
+      @config.endpoints.foo_api.options.base_path = "/canned_regex/foo"
+      ApiClient.config = null
+      ApiClient.load @config
+      @endpoint = ApiClient.create('foo_api')
+      @endpoint.get {pathname: "/canned_regex"}, null, (err, req, body) ->
+        expect(body).to.equal "body"
+        done()
+
+    it "can stub requests using canned data and a string", (done) ->
+      @config.endpoints.foo_api.options.base_path = "/canned_string/foo"
+      ApiClient.config = null
+      ApiClient.load @config
+      @endpoint = ApiClient.create('foo_api')
+      @endpoint.get {pathname: "/canned_string"}, null, (err, req, body) ->
+        expect(body).to.equal "foobar"
+        done()
+
+    it "can stub requests using file data and a regex", (done) ->
+      @config.endpoints.foo_api.options.base_path = "/file_regex/foo"
+      ApiClient.config = null
+      ApiClient.load @config
+      @endpoint = ApiClient.create('foo_api')
+      @endpoint.get {pathname: "/file_regex"}, null, (err, req, body) ->
+        expect(body).to.equal "body from file\n"
+        done()
 
   describe 'built from default configuration', ->
     beforeEach ->
