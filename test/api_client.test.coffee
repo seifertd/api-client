@@ -88,9 +88,9 @@ describe 'ApiClient', ->
             options:
               base_path: '/foobase'
             stubs: [
-             [/\/canned_regex/, null, null, 'body']
-             ["/canned_string", null, null, 'foobar']
-             [/\/file_regex/, null, null, {file: './test/stub_file.txt'}]
+             { uriRegex: /\/canned_regex/, err: null, response: null, body: 'body'}
+             { uriRegex: "/canned_string", err: null, response: null, body: 'foobar'}
+             { uriRegex: /\/file_regex/, err: null, err: null, body: {file: './test/stub_file.txt'}}
             ]
       ApiClient.config = null
       ApiClient.load @config
@@ -166,13 +166,13 @@ describe 'ApiClient', ->
       describe "and a callback", ->
         it "can stub errors", (done) ->
           test_endpoint = ApiClient.create('test_api')
-          test_endpoint.stub_request(/.*/, {error: true}, null, null)
+          test_endpoint.stub_request({uriRegex: /.*/, err: {error: true}, response: null, body: null})
           test_endpoint.get {}, null, (err, response, body) ->
             expect(err).to.not.be_null
             done()
         it "can stub successes", (done) ->
           test_endpoint = ApiClient.create('test_api')
-          test_endpoint.stub_request(/.*/, null, null, 'body')
+          test_endpoint.stub_request({uriRegex: /.*/, err: null, response: null, body: 'body'})
           test_endpoint.get {}, null, (err, response, body) ->
             expect(err).to.be_null
             expect(body).to.equal 'body'
@@ -180,14 +180,14 @@ describe 'ApiClient', ->
       describe "and no callback", ->
         it "can stub errors", (done) ->
           test_endpoint = ApiClient.create('test_api')
-          test_endpoint.stub_request(/.*/, {error: true}, null, null)
+          test_endpoint.stub_request({uriRegex: /.*/, err: {error: true}, response: null, body: null})
           request = test_endpoint.get {}, null
           request.on 'error', (err) ->
             expect(err).to.not.be_null
             done()
         it "can stub successes", (done) ->
           test_endpoint = ApiClient.create('test_api')
-          test_endpoint.stub_request(/.*/, null, null, 'body')
+          test_endpoint.stub_request({uriRegex: /.*/, err: null, err: null, body: 'body'})
           request = test_endpoint.get {}, null
           request.on 'complete', (response, body) ->
             expect(body).to.equal 'body'

@@ -1,3 +1,7 @@
+1.1.0 / 2014-01-13
+------------------
+* Change stubbing configuration to use objects
+
 1.0.14 / 2014-01-13
 ------------------
 * Add ability to stub using a string pattern as well as a regex object

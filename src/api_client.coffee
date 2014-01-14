@@ -67,7 +67,7 @@ class ApiClient
 
     # Allow stubs from config
     each options.stubs || [], (stub) =>
-      @stub_request stub...
+      @stub_request stub
 
   api_path: ->
     @options.base_path || "/"
@@ -82,7 +82,7 @@ class ApiClient
   url: (params = {}) ->
     url.format @url_config(params)
 
-  stub_request: (uriRegex, err, response, body) ->
+  stub_request: ({uriRegex, err, response, body}) ->
     if body?.file
       body = fs.readFileSync(body.file).toString()
     @stubs().push [uriRegex, err, response, body]
