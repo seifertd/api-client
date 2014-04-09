@@ -200,5 +200,5 @@ License
 
 MIT Licensed
 
-Copyright (c) 2013 Douglas A. Seifert
+Copyright (c) 2013-14 Douglas A. Seifert
 
