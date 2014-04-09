@@ -1,3 +1,7 @@
+1.1.1 / 2014-04-09
+------------------
+* Fix package.json dependencies
+
 1.1.0 / 2014-01-13
 ------------------
 * Change stubbing configuration to use objects
