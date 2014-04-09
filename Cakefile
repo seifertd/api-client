@@ -1,6 +1,7 @@
 {spawn} = require('child_process')
 testutil = require('testutil')
 async = require('async')
+util = require('util')
 
 coffee_path = "./node_modules/coffee-script/bin/coffee"
 mocha_path = "./node_modules/mocha/bin/mocha"
@@ -61,12 +62,15 @@ task 'test', 'test project', (options) ->
   invoke 'build'
   process.env['NODE_ENV'] = 'test'
   testutil.fetchTestFiles './test', (files) ->
+    files.unshift 'coffee:coffee-script/register'
+    files.unshift '--compilers'
     files.unshift '--colors'
     if options.grep?
       files.unshift options.grep
       files.unshift '--grep'
 
-    mocha = spawn mocha_path, files#, customFds: [0..2]
+    console.log "SPAWNING MOCHA: #{mocha_path} #{util.inspect files}"
+    mocha = spawn mocha_path, files
     mocha.stdout.pipe(process.stdout, end: false);
     mocha.stderr.pipe(process.stderr, end: false);
 

@@ -23,20 +23,20 @@
     "test": "cake test"
   },
   "dependencies": {
-    "config": "git+https://github.com/lorenwest/node-config.git",
-    "request": "2.x",
-    "underscore": "1.x"
+    "config": "~0.4.35",
+    "request": "~2.34.0",
+    "underscore": "~1"
   },
   "devDependencies": {
-    "testutil": "> 0",
-    "coffee-script": "> 0",
-    "mocha": "> 0",
-    "chai": "> 0",
-    "async": "> 0",
-    "growl": "> 0",
-    "fs-extra": "> 0",
-    "path-extra": "> 0",
-    "bondjs": "> 0"
+    "testutil": "~0.7.0",
+    "coffee-script": "~1.7.1",
+    "mocha": "~1.18.2",
+    "chai": "~1.9.1",
+    "async": "~0.7.0",
+    "growl": "~1.7.0",
+    "fs-extra": "~0.8.1",
+    "path-extra": "~0.1.1",
+    "bondjs": "~1.1.0"
   },
   "engines": {
     "node": "*"
