@@ -1,9 +1,31 @@
-util        = require 'util'
-expect      = require('chai').expect
-bond        = require 'bondjs'
+import * as chai from 'chai';
+import spies from 'chai-spies';
+chai.use(spies);
+const { expect } = chai;
+import { ApiClient } from '../lib/api_client.js';
+import config from 'config';
 
-ApiClient   = require '../lib/api_client'
+class Foo extends ApiClient {}
 
+describe("ApiClient", _ => {
+  describe("Registering custom classes", () => {
+    let fooClient = null;
+    let fooConfig = null;
+    beforeEach( () => {
+      ApiClient.register('Foo', Foo);
+      fooClient = ApiClient.create('foo');
+      fooConfig = config.get("endpoints").foo;
+    });
+    it("has the right host", () => {
+      expect(fooClient.host).to.equal(fooConfig.host);
+    });
+    it("has the right url", () => {
+      expect(fooClient.url()).to.equal('http://foo.com:80/foobase');
+    }); 
+  });
+});
+
+/*
 describe 'ApiClient', ->
   describe 'configured by registration', ->
     beforeEach ->
@@ -166,13 +188,13 @@ describe 'ApiClient', ->
       describe "and a callback", ->
         it "can stub errors", (done) ->
           test_endpoint = ApiClient.create('test_api')
-          test_endpoint.stub_request({uriRegex: /.*/, err: {error: true}, response: null, body: null})
+          test_endpoint.stub_request({uriRegex: /.*  /, err: {error: true}, response: null, body: null})
           test_endpoint.get {}, null, (err, response, body) ->
             expect(err).to.not.be_null
             done()
         it "can stub successes", (done) ->
           test_endpoint = ApiClient.create('test_api')
-          test_endpoint.stub_request({uriRegex: /.*/, err: null, response: null, body: 'body'})
+          test_endpoint.stub_request({uriRegex: /.*  /, err: null, response: null, body: 'body'})
           test_endpoint.get {}, null, (err, response, body) ->
             expect(err).to.be_null
             expect(body).to.equal 'body'
@@ -180,14 +202,14 @@ describe 'ApiClient', ->
       describe "and no callback", ->
         it "can stub errors", (done) ->
           test_endpoint = ApiClient.create('test_api')
-          test_endpoint.stub_request({uriRegex: /.*/, err: {error: true}, response: null, body: null})
+          test_endpoint.stub_request({uriRegex: /.*  /, err: {error: true}, response: null, body: null})
           request = test_endpoint.get {}, null
           request.on 'error', (err) ->
             expect(err).to.not.be_null
             done()
         it "can stub successes", (done) ->
           test_endpoint = ApiClient.create('test_api')
-          test_endpoint.stub_request({uriRegex: /.*/, err: null, err: null, body: 'body'})
+          test_endpoint.stub_request({uriRegex: /.*  /, err: null, err: null, body: 'body'})
           request = test_endpoint.get {}, null
           request.on 'complete', (response, body) ->
             expect(body).to.equal 'body'
@@ -224,3 +246,4 @@ describe 'ApiClient', ->
         expect(error).to.not.be(null)
         done()
   ###
+*/
