@@ -1,6 +1,4 @@
 import * as chai from 'chai';
-import spies from 'chai-spies';
-chai.use(spies);
 const { expect } = chai;
 import { ApiClient } from '../lib/api_client.js';
 import config from 'config';
