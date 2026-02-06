@@ -1,5 +1,2 @@
-ApiClient = require("./lib/api_client");
-
-module.exports = {
-  ApiClient: ApiClient,
-}
+import { ApiClient } from './lib/api_client.js';
+export { ApiClient };
