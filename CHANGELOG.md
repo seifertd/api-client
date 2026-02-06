@@ -1,3 +1,14 @@
+2.0.1 / 2026-02-06
+------------------
+* Fix the entry point to properly export via ES Modules
+
+2.0.0 / 2026-02-06
+------------------
+* Rewrite using ES modules and plain javascript
+* BREAKING CHANGES:
+  * The stubbing feature is completely removed
+  * Removed VersionedApiClient and TwitterClient classes
+
 1.1.2 / 2014-04-09
 ------------------
 * Fix package.json dependencies
