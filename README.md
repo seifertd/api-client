@@ -17,7 +17,7 @@ Installation
 TLDR
 ----
 ```javascript
-import { ApiClient } from './lib/api_client.js';
+import { ApiClient } from 'api-client';
 const client = ApiClient.create("dseifert");
 const r = await client.get("bookmarks.html")
 console.log("RESPONSE: ", r);
