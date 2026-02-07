@@ -1,15 +1,17 @@
-import url from 'url';
-import config from 'config';
+'use strict';
+
+var url = require('url');
+var config = require('config');
 
 const normalizePath = (base_path, path) => {
-  let pathname = [base_path, path].filter(Boolean).join("/")
+  let pathname = [base_path, path].filter(Boolean).join("/");
   if (!pathname.startsWith("/")) {
     pathname = `/${pathname}`;
   }
   return pathname.replaceAll(/\/\/+/g, '/');
-}
+};
 
-export class ApiClient {
+class ApiClient {
   static types = {
     "ApiClient": ApiClient
   }
@@ -79,3 +81,5 @@ export class ApiClient {
     });
   }
 }
+
+exports.ApiClient = ApiClient;

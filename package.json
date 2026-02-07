@@ -8,7 +8,15 @@
   "description": "Object Oriented library for HTTP Web API clients",
   "version": "2.0.1",
   "type": "module",
-  "homepage": "",
+  "main": "index.cjs",
+  "module": "index.js",
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "require": "./index.cjs"
+    }
+  },
+  "homepage": "https://www.npmjs.com/package/api-client",
   "keywords": [
     "rest",
     "web service",
@@ -20,15 +28,20 @@
     "url": "git+https://github.com/seifertd/api-client.git"
   },
   "scripts": {
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build",
     "test": "NODE_ENV=test mocha test",
     "major-release": "npm version major && git push --tags"
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
-    "config": ">=4.2.0",
-    "node-fetch": "^3.3.2"
+    "config": ">=4.2.0"
   },
   "devDependencies": {
     "chai": "^6.2.2",
-    "mocha": "^11.7.5"
+    "mocha": "^11.7.5",
+    "rollup": "^4.57.1"
   }
 }
