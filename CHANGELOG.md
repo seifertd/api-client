@@ -12,6 +12,7 @@
 * BREAKING CHANGES:
   * The stubbing feature is completely removed
   * Removed VersionedApiClient and TwitterClient classes
+  * Async/Await
 
 1.1.2 / 2014-04-09
 ------------------
