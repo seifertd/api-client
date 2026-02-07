@@ -1,3 +1,7 @@
+2.0.2 / 2026-02-06
+------------------
+* With the help of Claude, support both CJS and ES Modules
+
 2.0.1 / 2026-02-06
 ------------------
 * Fix the entry point to properly export via ES Modules
