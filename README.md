@@ -14,6 +14,24 @@ Installation
 
     npm install api-client
 
+TLDR
+----
+```javascript
+import { ApiClient } from './lib/api_client.js';
+const client = ApiClient.create("dseifert");
+const r = await client.get("bookmarks.html")
+console.log("RESPONSE: ", r);
+```
+
+`client.get(path, query, headers)`
+  * path: relative path of the request, is appended to base\_path
+    if you have a base\_path in your endpoint configuration.
+  * query: query string args as a Javascript object
+  * headers: request headers as a Javascript object
+
+If you need to use Basic auth, add the appropriate request
+header.
+
 Usage
 -----
 
@@ -69,8 +87,6 @@ Each endpoint configuration object has the following layout:
 "options": {
   "protocol": "http|https", # Either 'http' or 'https', defaults to 'http'
   "base_path": "/apibase",  # The base of all url paths for the service, defaults to '/'
-  "username": "user",       # Defaults to null, use to configure HTTP basic auth
-  "password": "pass"        # Defaults to null, use to configure HTTP basic auth
 }
 ```
 
@@ -81,7 +97,7 @@ The url formed by the api-client will therefore be:
 ### Using the default configuration
 
 ```javascript
-import { ApiClient } from './lib/api_client.js';
+import { ApiClient } from 'api-client';
 const client = ApiClient.create("dseifert");
 const r = await client.get('/', {});
 console.log("RESPONSE: ", r);
@@ -90,7 +106,7 @@ console.log("RESPONSE: ", r);
 ### Client supplied configuration
 
 ```javascript
-import { ApiClient } from './lib/api_client.js';
+import { ApiClient } from 'api-client';
 const myConfig = {
   foo_client: {
     host: 'foo.com'
@@ -104,7 +120,7 @@ foo_client.get({...})
 ### Registering client created ApiClient subclasses
 
 ```javascript
-import { ApiClient } from './lib/api_client.js';
+import { ApiClient } from 'api-client';
 
 class FooClient extends ApiClient {
   test() {
