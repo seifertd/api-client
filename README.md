@@ -18,6 +18,12 @@ TLDR
 ----
 ```javascript
 import { ApiClient } from 'api-client';
+ApiClient.registerConfig('dseifert', {
+  host: "www.dseifert.net",
+  options: {
+    protocol: "https"
+  }
+});
 const client = ApiClient.create("dseifert");
 const r = await client.get("bookmarks.html")
 console.log("RESPONSE: ", r);
